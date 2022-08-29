@@ -1,0 +1,33 @@
+{
+    "name": "tofex/m2-foundation",
+    "description": "Tofex Magento 2 Foundation",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": "MIT",
+    "keywords": [
+        "Magento"
+    ],
+    "homepage": "https://github.com/tofex/m2-log",
+    "authors": [
+        {
+            "name": "Andreas Knollmann",
+            "email": "a.knollmann@tofex.de",
+            "homepage": "https://www.tofex.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "educoder/pest": "~1.0.0",
+        "magento/framework": "~101.0.0|~102.0.0|~103.0.0",
+        "tofex/m2-core": "~1.0"
+    },
+    "autoload": {
+        "files": [
+            "src/registration.php"
+        ],
+        "psr-4": {
+            "Tofex\\Foundation\\": "src"
+        }
+    }
+}
