@@ -3,6 +3,7 @@
 namespace Tofex\Foundation\Helper;
 
 use Exception;
+use Magento\Backend\Model\Auth\Session;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Module\FullModuleList;
 use Pest;
@@ -36,6 +37,9 @@ class Data
     /** @var FullModuleList */
     protected $fullModuleList;
 
+    /** @var Session */
+    protected $authSession;
+
     /**
      * @param Arrays          $arrayHelper
      * @param Variables       $variableHelper
@@ -43,6 +47,7 @@ class Data
      * @param LoggerInterface $logging
      * @param Http            $request
      * @param FullModuleList  $fullModuleList
+     * @param Session         $authSession
      */
     public function __construct(
         Arrays $arrayHelper,
@@ -50,14 +55,17 @@ class Data
         SimpleXml $simpleXml,
         LoggerInterface $logging,
         Http $request,
-        FullModuleList $fullModuleList)
+        FullModuleList $fullModuleList,
+        Session $authSession)
     {
         $this->arrayHelper = $arrayHelper;
         $this->variableHelper = $variableHelper;
+
         $this->simpleXml = $simpleXml;
         $this->logging = $logging;
         $this->request = $request;
         $this->fullModuleList = $fullModuleList;
+        $this->authSession = $authSession;
     }
 
     /**
@@ -77,6 +85,12 @@ class Data
             if ( ! $this->variableHelper->isEmpty($tag)) {
                 $url .= sprintf('/tag/%s', $tag);
             }
+
+            $backendUser = $this->authSession->getUser();
+
+            $locale = $backendUser->getInterfaceLocale();
+
+            $url .= sprintf('/lang/%s', $this->arrayHelper->getValue($locale, 0, 'en'));
 
             $result = $this->simpleXml->simpleXmlLoadString($rssClient->get($url));
 

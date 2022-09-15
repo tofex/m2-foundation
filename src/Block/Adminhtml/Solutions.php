@@ -49,6 +49,7 @@ class Solutions
         $this->helper = $helper;
         $this->variableHelper = $variableHelper;
         $this->arrayHelper = $arrayHelper;
+
         $this->logging = $context->getLogger();
     }
 
