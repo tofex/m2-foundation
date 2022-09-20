@@ -90,7 +90,9 @@ class Data
 
             $locale = $backendUser->getInterfaceLocale();
 
-            $url .= sprintf('/lang/%s', $this->arrayHelper->getValue($locale, 0, 'en'));
+            if ( ! $this->variableHelper->isEmpty($locale)) {
+                $url .= sprintf('/lang/%s', $this->arrayHelper->getValue(explode('_', $locale), 0, 'en'));
+            }
 
             $result = $this->simpleXml->simpleXmlLoadString($rssClient->get($url));
 
